@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        .d1 {
+            width: 100%;
+            border: 2px solid #00FF00;
+            background-color: #CCFFCC;
+        }
+        /*
+        .d2 {
+            width: 100%;
+            height: 500px;
+            overflow-y: auto;
+            border: 2px solid #00FF00;
+            background-color: #CCFFCC;
+        }
+        .t{
+		    width: 100%;
+             background-color: #CCFFCC;a
+	    }*/
+        h1 {
+            font-size: 60px;
+            text-align: center;
+            background-color: #FF9966;
+        }
+        a:link {
+            text-decoration: none;
+        }
+        body {
+	        background-color: #FFFFCC;
+        }
+        .p1 {
+		font-size: 30px;
+	    }
+        .p2 {
+		font-size: 25px;
+		color: #336600;
+	    }
+
+    </style>
+</head>
+<body>
+    <h1>Youtuber數據查詢</h1>
+
+    <form method="post", action="{{url_for('submit1')}}">
+        <p>頻道名稱:<input type='text' name="channel">&nbsp;<button type='submit'>確定</button></p>
+    </form>
+    <form method="post", action="{{url_for('submit4')}}">
+        <p>頻道網址:<input type='text' name="channel_url">&nbsp;<button type='submit'>確定</button></p>
+    </form>
+
+    <div class="d1">
+        <br>
+        <a href="{{channel_url}}">
+            <img src="{{img_src}}"><br><br>
+            <span class="p1">{{channel_name}}</span>
+        </a><br><br><br>
+
+        <span class="p2" lang="zh-tw">基本資料</span><br><br>
+        {{subs}}<br>
+        {% for i in cd %}
+        {{i}}<br>
+        {% endfor %}
+        <br>
+
+        <span class="p2" lang="zh-tw">簡介</span><br><br>
+        {% for i in introduction %}
+        {{i}}<br>
+        {% endfor %}
+        <br>
+
+        <span class="p2" lang="zh-tw">連結</span><br><br>
+        {% for i in ahref %}
+        <a href="{{i[1]}}">{{i[0]}}</a><br>
+        {% endfor %}
+        <br>
+
+        <span class="p2" lang="zh-tw">其他</span><br><br>
+        <form method="post", action="{{url_for('submit2')}}">
+            <input type="hidden" name="channel_url" value="{{channel_url}}">
+            <input type="hidden" name="img_src" value="{{img_src}}">
+            <input type="hidden" name="channel_name" value="{{channel_name}}">
+            <input type="hidden" name="subs" value="{{subs}}">
+            <button type='submit'>生成完整資料</button>
+            <span lang="zh-tw">&nbsp;*所需時間約為影片數量(公開且非會員限定)*3秒，影片數量過多可能會導致生成失敗</span>
+        </form> 
+        <br>
+    </div>
+    
+</body>
+</html>

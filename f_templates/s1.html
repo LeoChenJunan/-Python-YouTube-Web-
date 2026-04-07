@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        h1 {
+            font-size: 60px;
+            text-align: center;
+            background-color: #FF9966;
+        }
+        .d1 {
+		    border-radius: 10px;
+		    width: 96%;
+		    position: absolute;
+		    left: 1%;
+            background-color: #99FF99;
+            padding: 1%;
+	    }
+        .d2 {
+            width: 178px;
+            height: 270px;
+            display: inline-block;
+        }
+        a:link {
+            text-decoration: none;
+        }
+        body {
+	        background-color: #FFFFCC;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Youtuber數據查詢</h1>
+    <form method="post", action="{{url_for('submit1')}}">
+        <p>頻道名稱:<input type='text' name="channel">&nbsp;<button type='submit'>確定</button></p>
+    </form>
+    <form method="post", action="{{url_for('submit4')}}">
+        <p>頻道網址:<input type='text' name="channel_url">&nbsp;<button type='submit'>確定</button></p>
+    </form>
+    <div class="d1">
+        {% for i in data %}
+            <div class="d2">
+            <a href="{{i[3]}}">
+                <img src="{{i[0]}}"><br>
+                {{i[1]}}
+            </a>
+            <br>{{i[2]}}<br>
+            <form method="post", action="{{url_for('submit3')}}">
+                <input type="hidden" name="channel_url" value="{{i[3]}}">
+                <input type="hidden" name="img_src" value="{{i[0]}}">
+                <input type="hidden" name="channel_name" value="{{i[1]}}">
+                <input type="hidden" name="subs" value="{{i[2]}}">
+                <button type='submit'>確定</button>
+            </form>
+            </div>
+        {% endfor %}
+    </div>
+    <p></p>
+</body>
+</html>

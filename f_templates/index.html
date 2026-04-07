@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        h1 {
+            font-size: 60px;
+            text-align: center;
+            background-color: #FF9966;
+        }
+        body {
+	        background-color: #FFFFCC;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>Youtuber數據查詢</h1>
+    <form method="post", action="{{url_for('submit1')}}">
+        <p>頻道名稱:<input type='text' name="channel">&nbsp;<button type='submit'>確定</button></p>
+    </form>
+    <form method="post", action="{{url_for('submit4')}}">
+        <p>頻道網址:<input type='text' name="channel_url">&nbsp;<button type='submit'>確定</button></p>
+    </form>
+</body>
+</html>
