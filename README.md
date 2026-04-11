@@ -1,38 +1,175 @@
-【主要功能】
-1. 頻道搜尋與定位：支援透過「頻道名稱」搜尋或直接輸入「頻道網址」。
-2. 頻道基本資料擷取：自動抓取頻道加入日期、總影片數、總觀看次數與頻道簡介。
-3. 影片數據爬取：模擬捲動載入，抓取頻道內所有影片的發布日期、按讚數與觀看次數。
-4. 資料庫儲存：將爬取的原始數據（包含頻道資訊、影片數據）寫入 SQL Server 資料庫。
-5. 數據視覺化：以「年份」為單位，使用 Matplotlib 自動繪製出該頻道歷年的「觀看數」與「按讚數」折線圖，並顯示於網頁上。
+#  Python YouTube Web Analyzer
 
-【技術架構】
-* 後端框架：Python Flask
-* 網頁爬蟲：Selenium (搭配 Chrome WebDriver)
-* 資料庫：Microsoft SQL Server (透過 pyodbc 連線)
-* 數據視覺化：Matplotlib
-* 前端介面：HTML / CSS (Jinja2 模板引擎)
+一個使用 Python 建立的 YouTube 資料分析網站，透過爬蟲技術抓取頻道與影片數據，並以網頁方式呈現與視覺化分析。
 
-【環境建置與執行準備】
-在執行本專案前，請確保您的開發環境已安裝以下套件與軟體：
+---
 
-1. 安裝 Python 依賴套件：
-   pip install flask selenium webdriver-manager pyodbc matplotlib
+##  專案特色
 
-2. 資料庫設定：
-   * 本機需安裝 Microsoft SQL Server。
-   * 需建立一個名為 `testdb` 的資料庫。
-   * (註：程式執行時會自動 DROP 並 CREATE 所需的資料表 adata, bdata, cdata, tdata, vdata，請勿將重要資料與此資料庫共用)。
+*  搜尋 YouTube 頻道
+*  抓取頻道基本資訊（訂閱數、影片數、建立時間等）
+*  擷取所有影片資料（觀看數、按讚數、發布日期）
+*  自動生成數據圖表（按讚數 / 觀看數趨勢）
+*  使用 Flask 建立 Web 介面
 
-3. 路徑設定修改 (重要！)：
-   在執行 `ytdata.py` 前，請務必將程式碼中的絕對路徑修改為您本機的實際路徑：
-   * `ftpath`：請更改為存放模板與靜態資源的資料夾路徑 (例如：C:\Users\...\f_templates)
-   * `font_path`：請確認 Windows 字體路徑 (C:\Windows\Fonts\kaiu.ttf) 是否正確，以免 Matplotlib 繪圖時中文顯示為亂碼。
+---
 
-【執行方式】
-1. 啟動資料庫服務 (SQL Server)。
-2. 在終端機執行：`python ytdata.py`
-3. 打開瀏覽器，前往 `http://127.0.0.1:5000/` 即可開始使用。
+## 🛠️ 技術架構
 
-【注意事項與已知限制】
-* 爬蟲穩定性：本專案使用 Selenium 模擬瀏覽器行為，若 YouTube 網頁結構更新，或因網路延遲導致元素載入較慢，可能會造成程式抓不到資料 (XPath 失效)。
-* 執行時間：頻道影片數量越多，爬取與繪圖所需的時間越長，請耐心等待網頁加載。
+### Backend
+
+* Python
+* Flask（Web Framework）
+* Selenium（爬蟲）
+* pyodbc（資料庫連線）
+* Matplotlib（資料視覺化）
+
+### Frontend
+
+* HTML (Jinja2 Template)
+* CSS（靜態樣式）
+
+### Database
+
+* SQL Server
+
+---
+
+##  專案結構
+
+```
+.
+├── ytdata.py              # 主程式（Flask + 爬蟲邏輯）
+├── templates/             # HTML 頁面
+│   ├── index.html
+│   ├── s1.html
+│   ├── s2.html
+│   ├── f1.html
+│   ├── f2.html
+│   └── ff.html
+├── static/
+│   └── img*/              # 自動生成圖表
+```
+
+---
+
+##  功能說明
+
+###  搜尋頻道
+
+輸入關鍵字，系統會：
+
+* 搜尋 YouTube 頻道
+* 顯示頻道列表
+
+---
+
+###  頻道分析
+
+選擇頻道後可查看：
+
+* 訂閱數
+* 建立日期
+* 影片總數
+* 頻道描述
+* 外部連結
+
+---
+
+###  影片資料抓取
+
+系統會：
+
+* 自動滾動載入所有影片
+* 擷取每部影片：
+
+  * 按讚數 
+  * 觀看數 
+  * 發布日期 
+
+---
+
+###  數據視覺化
+
+自動產生：
+
+*  每年「按讚數趨勢圖」
+*  每年「觀看數趨勢圖」
+
+---
+
+##  執行方式
+
+###  安裝套件
+
+```bash
+pip install flask selenium webdriver-manager pyodbc matplotlib
+```
+
+---
+
+###  設定環境
+
+請修改 `ytdata.py` 中以下設定：
+
+```python
+# Template 路徑
+ftpath = "你的 templates 路徑"
+
+# SQL Server 連線
+conn = pyodbc.connect(
+    'Driver={ODBC Driver 17 for SQL Server};'
+    'Server=你的伺服器;'
+    'Database=你的資料庫;'
+    'Trusted_Connection=yes;'
+)
+```
+
+---
+
+###  執行專案
+
+```bash
+python ytdata.py
+```
+
+開啟瀏覽器：
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+## 注意事項
+
+* 需安裝 Google Chrome
+* Selenium 會自動下載 ChromeDriver
+* 此專案使用「爬蟲」，可能受 YouTube 改版影響
+* 執行速度較慢（需等待資料抓取）
+
+---
+
+##  專案限制
+
+*  無 API（純爬蟲）
+*  無前後端分離
+*  資料庫結構較簡單
+*  未部署（本地運行）
+
+---
+
+##  未來優化方向
+
+*  改用 YouTube Data API
+*  使用 FastAPI 重構後端
+*  前後端分離（Vue / React）
+*  Docker 部署
+*  加入使用者系統
+*  優化爬蟲效率與穩定性
+
+---
+
+MIT License
+
+---
