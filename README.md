@@ -2,7 +2,7 @@
 
 # YouTube 頻道資料分析系統
 
-本專案為一個以 Python 開發的 YouTube 頻道資料分析系統，透過自動化爬蟲擷取頻道與影片資料，並進行整理與長期趨勢分析，最終以圖表與網頁方式呈現結果。
+本專案設計了一套以 Python 開發的 YouTube 頻道資料分析系統，透過自動化爬蟲擷取頻道與影片資料，並進行整理與長期趨勢分析，最終以圖表與網頁方式呈現結果。
 
 此專案展示從資料蒐集 資料處理 到資料視覺化的完整流程，具備實際資料分析應用價值。
 
@@ -27,6 +27,12 @@ SQL Server
 matplotlib
 
 ---
+
+## 技術挑戰
+
+- YouTube 動態載入內容需使用 Selenium 模擬滾動
+- 針對 infinite scroll 設計自動抓取策略
+- 處理 YouTube likes 數字格式（萬 / K）
 
 ## 專案結構說明
 
@@ -70,6 +76,21 @@ matplotlib
 透過網頁顯示結果-end
 
 ---
+
+## 系統架構
+
+前端層（Flask Template 使用者介面）
+        ↓
+後端層（Flask Controller 與 Python 邏輯）
+        ↓
+資料擷取層（Selenium 爬蟲）
+        ↓
+資料儲存層（SQL Server 資料庫）
+        ↓
+資料處理與分析層（Python + Matplotlib）
+        ↓
+結果呈現層（Flask 模板與圖表）
+
 
 ## 核心功能說明
 
